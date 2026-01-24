@@ -3,6 +3,7 @@ from email.policy import default
 from pkg_resources import require
 
 from odoo import api, fields, models
+from odoo.release import description
 
 
 class HospitalAppointment(models.Model):
@@ -19,6 +20,9 @@ class HospitalAppointment(models.Model):
         [('draft','Draft'),('confirmed','Confirmed'),('ongoing','Ongoing'),
          ('done','Done'),('cancel','Canceled')
          ],default='draft',tracking=True)
+    appointment_line_ids = fields.One2many(
+        'hospital.appointment.line','appointment_id',string="Lines"
+    )
 
     @api.model_create_multi
     def create(self,vals_list):
@@ -42,3 +46,11 @@ class HospitalAppointment(models.Model):
     def action_cancel(self):
         for rec in self:
             rec.state = 'cancel'
+
+class HospitalAppointmentLines(models.Model):
+    _name= 'hospital.appointment.line'
+    _description='Hospital Appointment Lines'
+
+    appointment_id = fields.Many2one('hospital.appointment',string="Appointment")
+    product_id = fields.Many2one('product.product',string="Products")
+    qty = fields.Float(string="Quantity")
