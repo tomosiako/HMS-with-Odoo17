@@ -26,6 +26,8 @@ class HospitalAppointment(models.Model):
     )
     total_qty =fields.Float(compute="_compute_total_qty" ,string="Total Quantity",store=True)
 
+    date_of_birth = fields.Date(related="patient_id.date_of_birth", store =True)
+
     @api.model_create_multi
     def create(self,vals_list):
         for vals in vals_list:
