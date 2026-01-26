@@ -3,6 +3,7 @@ from email.policy import default
 from pkg_resources import require
 
 from odoo import api, fields, models
+from odoo.api import ondelete
 from odoo.release import description
 
 
@@ -14,7 +15,7 @@ class HospitalAppointment(models.Model):
     _rec_name = 'patient_id'
 
     reference = fields.Char(string="Reference", default="New")
-    patient_id = fields.Many2one('hospital.patient',string="Patient")
+    patient_id = fields.Many2one('hospital.patient',string="Patient",required=False, ondelete='cascade')
     date_appointment = fields.Date(string="Date")
     note = fields.Text(string="Note")
     state = fields.Selection(
