@@ -1,6 +1,9 @@
-from pkg_resources import require
+#from pkg_resources import require
+from odoo import api, fields, models, _
+from odoo.exceptions import UserError,ValidationError
 
-from odoo import api, fields, models
+
+from odoo.exceptions import ValidationError
 
 
 class HospitalPatient(models.Model):
@@ -19,5 +22,11 @@ class HospitalPatient(models.Model):
     )
 
     def unlink(self):
+        for rec in self:
+            domain = [('patient_id','=',rec.id)]
+            appointments = self.env['hospital.appointment'].search(domain)
+            if appointments:
+                raise UserError(_("You cannot delete the patient now "
+                                        "\n Appointments exist for this patient: %s" %rec.name))
         return super().unlink()
 
