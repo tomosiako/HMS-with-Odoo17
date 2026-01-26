@@ -39,3 +39,4 @@ class HospitalPatient(models.Model):
     #                                     "\n Appointments exist for this patient: %s" %rec.name))
     #     return super().unlink()
 
+
