@@ -18,3 +18,6 @@ class HospitalPatient(models.Model):
         'product.product',string="Products"
     )
 
+    def unlink(self):
+        return super().unlink()
+
