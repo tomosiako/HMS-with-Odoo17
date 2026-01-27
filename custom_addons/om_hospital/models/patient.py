@@ -16,6 +16,9 @@ class HospitalPatient(models.Model):
     gender = fields.Selection([('male','Male'),('female','Female')],string="Gender",tracking=True)
     tag_ids = fields.Many2many(
         'patient.tag','patient_tag_rel','patient_id',string="Tags")
+    is_minor = fields.Boolean(string='Minor')
+    guardian = fields.Char(string="Guardian")
+    weight = fields.Float(string="Weight")
 
     product_ids = fields.Many2many(
         'product.product',string="Products"
